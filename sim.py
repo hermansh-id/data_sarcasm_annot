@@ -16,7 +16,7 @@ while(not(pd.isna((df.iloc[random_index]['sarcasm'])))):
 # Define label buttons
 labels = ['Non-sarcasm', 'Sarcasm', 'Noise']
 
-st.title(df.iloc[random_index]['text'])
+st.write(df.iloc[random_index]['text'])
 
 if(st.button("Sarcasm")):
     df.loc[random_index, 'sarcasm'] = 1
