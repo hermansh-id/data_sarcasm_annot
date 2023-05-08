@@ -5,6 +5,10 @@ import random
 
 # Load data from local XLSX file
 df = pd.read_excel('data_clean.xlsx')
+if os.path.isfile('data_clean.xlsx'):
+    with open('data_clean.xlsx', 'rb') as f:
+        data = f.read()
+        st.download_button(label='Download cleaned data', data=data, file_name='data_clean.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 # Select text column where sarcasm is NaN
 dfkosong = len(df.loc[df['sarcasm'].isna(), ['text']])
@@ -16,19 +20,20 @@ while(not(pd.isna((df.iloc[random_index]['sarcasm'])))):
 # Define label buttons
 labels = ['Non-sarcasm', 'Sarcasm', 'Noise']
 
-st.write(df.iloc[random_index]['text'])
+st.header(df.iloc[random_index]['text'])
 
-if(st.button("Sarcasm")):
-    df.loc[random_index, 'sarcasm'] = 1
-    df.to_excel("data_clean.xlsx", index=False)
-if(st.button("Non-Sarcasm")):
-    df.loc[random_index, 'sarcasm'] = 0
-    df.to_excel("data_clean.xlsx", index=False)
-if(st.button("Non-Clean")):
-    df.loc[random_index, 'sarcasm'] = 2
-    df.to_excel("data_clean.xlsx", index=False)
+col1, col2, col3 = st.columns([1,1,1])
 
-if os.path.isfile('data_clean.xlsx'):
-    with open('data_clean.xlsx', 'rb') as f:
-        data = f.read()
-        st.download_button(label='Download cleaned data', data=data, file_name='data_clean.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+with col1:
+    if(st.button("Sarcasm")):
+        df.loc[random_index, 'sarcasm'] = 1
+        df.to_excel("data_clean.xlsx", index=False)
+with col2:
+    if(st.button("Non-Sarcasm")):
+        df.loc[random_index, 'sarcasm'] = 0
+        df.to_excel("data_clean.xlsx", index=False)
+with col3:
+    if(st.button("Non-Clean")):
+        df.loc[random_index, 'sarcasm'] = 2
+        df.to_excel("data_clean.xlsx", index=False)
+
