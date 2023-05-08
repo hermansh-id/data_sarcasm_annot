@@ -8,7 +8,7 @@ df = pd.read_excel('data_clean.xlsx')
 
 # Select text column where sarcasm is NaN
 dfkosong = len(df.loc[df['sarcasm'].isna(), ['text']])
-st.write(str(dfkosong) + " / " + str(len(df)))
+st.write(str(len(df) - dfkosong) + " / " + str(len(df)))
 random_index = random.randint(0, len(df) - 1)
 # st.write(df.iloc[random_index]['sarcasm'].isnull())
 while(not(pd.isna((df.iloc[random_index]['sarcasm'])))):
