@@ -13,10 +13,10 @@ if os.path.isfile('data_clean.xlsx'):
 # Select text column where sarcasm is NaN
 dfkosong = len(df.loc[df['sarcasm'].isna(), ['text']])
 st.write(str(len(df) - dfkosong) + " / " + str(len(df)))
-random_index = random.randint(0, len(df) - 1)
+random_index = 0
 # st.write(df.iloc[random_index]['sarcasm'].isnull())
 while(not(pd.isna((df.iloc[random_index]['sarcasm'])))):
-    random_index = random.randint(0, len(df) - 1)
+    random_index = random_index + 1
 # Define label buttons
 labels = ['Non-sarcasm', 'Sarcasm', 'Noise']
 
@@ -28,12 +28,15 @@ with col1:
     if(st.button("Sarcasm")):
         df.loc[random_index, 'sarcasm'] = 1
         df.to_excel("data_clean.xlsx", index=False)
+        st.experimental_rerun()
 with col2:
     if(st.button("Non-Sarcasm")):
         df.loc[random_index, 'sarcasm'] = 0
         df.to_excel("data_clean.xlsx", index=False)
+        st.experimental_rerun()
 with col3:
     if(st.button("Non-Clean")):
         df.loc[random_index, 'sarcasm'] = 2
         df.to_excel("data_clean.xlsx", index=False)
+        st.experimental_rerun()
 
